@@ -40,6 +40,10 @@ h4 {
   text-transform: uppercase;
 }
 
+.account-card {
+  padding: 20px;
+}
+
 .inc-exp-container {
   background-color: #fff;
   box-shadow: var(--box-shadow);
@@ -111,6 +115,12 @@ input[type='number'] {
   margin-bottom: 40px;
 }
 
+.transaction-list {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 40px;
+}
+
 .list li {
   background-color: #fff;
   box-shadow: var(--box-shadow);
@@ -146,6 +156,30 @@ input[type='number'] {
   transition: opacity 0.3s ease;
 }
 
-.list li:hover .delete-btn {
+.delete-account-btn {
+  cursor: pointer;
+  background-color: #e74c3c;
+  border: 0;
+  color: #fff;
+  font-size: 20px;
+  line-height: 20px;
+  padding: 2px 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-100%, 0);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.transaction-list li:hover .delete-btn {
+  opacity: 1;
+}
+
+.account-list li:first-of-type:hover .delete-btn {
+  opacity: 1;
+}
+
+.account-card:hover .delete-account-btn {
   opacity: 1;
 }

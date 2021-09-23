@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react'
 import { GlobalContext } from '../context/GlobalState';
 
 // Add transaction component
-export const AddTransaction = () => {
+export const AddTransaction = ({ account }) => {
   // Set up the state, default to '' and 0
   const [text, setText] = useState('');
   const [amount, setAmount] = useState(0);
@@ -16,7 +16,8 @@ export const AddTransaction = () => {
 
     const newTransaction = {
       text,
-      amount: +amount
+      amount: +amount,
+      accountID: account._id
     }
 
     addTransaction(newTransaction);

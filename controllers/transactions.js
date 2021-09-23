@@ -13,7 +13,8 @@ exports.getTransactions = async (req, res, next) => {
       count: transactions.length,
       data: transactions
     });
-  } catch (error) {
+  } 
+  catch (error) {
     // Failure status returned
     return res.status(500).json({
       success: false,
@@ -37,7 +38,8 @@ exports.addTransaction = async (req, res, next) => {
       success: true,
       data: transaction
     }); 
-  } catch (error) {
+  } 
+  catch (error) {
     // If there is a validation error, grab the error messages
     if(error.name === 'ValidationError') {
       const messages = Object.values(error.errors).map(val => val.message);
@@ -47,7 +49,8 @@ exports.addTransaction = async (req, res, next) => {
         success: false,
         error: messages
       });
-    } else {
+    } 
+    else {
       // Generic server error status
       return res.status(500).json({
         success: false,
@@ -81,7 +84,8 @@ exports.deleteTransaction = async (req, res, next) => {
       data: {}
     });
 
-  } catch (error) {
+  } 
+  catch (error) {
     // Fail status
     return res.status(500).json({
       success: false,

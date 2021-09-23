@@ -4,6 +4,7 @@ import axios from 'axios';
 
 // Initial state
 const initialState = {
+  accounts: [],
   transactions: [],
   error: null,
   loading: true
@@ -16,6 +17,23 @@ export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
+  async function getAccounts() {
+    try{
+      const res = await axios.get('api/v1/accounts');
+
+      dispatch({
+        type: 'GET_ACCOUNTS',
+        payload: res.data.data
+      });
+    }
+    catch (error) {
+      dispatch({
+        type: 'ACCOUNT_ERROR',
+        payload: error.response.data.error
+      });
+    }
+  }
+
   async function getTransactions() {
     try {
       // Get request
@@ -26,10 +44,27 @@ export const GlobalProvider = ({ children }) => {
         type: 'GET_TRANSACTIONS',
         payload: res.data.data
       });
-    } catch (err) {
+    } catch (error) {
       dispatch({
         type: 'TRANSACTION_ERROR',
-        payload: err.response.data.error
+        payload: error.response.data.error
+      });
+    }
+  }
+
+  async function deleteAccount(id) {
+    try {
+      await axios.delete(`/api/v1/accounts/${id}`);
+
+      dispatch({
+        type: 'DELETE_ACCOUNT',
+        payload: id
+      });
+    }
+    catch (error) {
+      dispatch({
+        type: 'ACCOUNT_ERROR',
+        payload: error.response.data.error
       });
     }
   }
@@ -44,10 +79,33 @@ export const GlobalProvider = ({ children }) => {
         type: 'DELETE_TRANSACTION',
         payload: id
       });
-    } catch (err) {
+    } catch (error) {
       dispatch({
         type: 'TRANSACTION_ERROR',
-        payload: err.response.data.error
+        payload: error.response.data.error
+      });
+    }
+  }
+
+  async function addAccount(account) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    try {
+      const res = await axios.post('/api/v1/accounts', account, config);
+
+      dispatch({
+        type: 'ADD_ACCOUNT',
+        payload: res.data.data
+      });
+    }
+    catch (error) {
+      dispatch({
+        type: 'ACCOUNT_ERROR',
+        payload: error.response.data.error
       });
     }
   }
@@ -68,20 +126,24 @@ export const GlobalProvider = ({ children }) => {
         type: 'ADD_TRANSACTION',
         payload: res.data.data
       });
-    } catch (err) {
+    } catch (error) {
       dispatch({
         type: 'TRANSACTION_ERROR',
-        payload: err.response.data.error
+        payload: error.response.data.error
       });
     }
   }
 
   return (<GlobalContext.Provider value={{
+    accounts: state.accounts,
     transactions: state.transactions,
     error: state.error,
     loading: state.loading,
+    getAccounts,
     getTransactions,
+    deleteAccount,
     deleteTransaction,
+    addAccount,
     addTransaction
   }}>
     {children}

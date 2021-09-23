@@ -3,9 +3,11 @@ import { GlobalContext } from '../context/GlobalState';
 import { numberWithCommas } from '../utils/format';
 
 // Balance component
-export const Balance = () => {
+export const Balance = ({ account }) => {
   // Sets up the context
   const { transactions } = useContext(GlobalContext);
+
+  transactions.filter(transaction => transaction.accountID !== account._id);
 
   // Grabs all the amounts from transactions
   const amounts = transactions.map(transaction => transaction.amount);

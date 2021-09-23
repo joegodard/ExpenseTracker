@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
+const Schema = mongoose.Schema,
+      ObjectId = Schema.ObjectId;
 // Schema for transactions db
-const TransactionSchema = new mongoose.Schema({
+const TransactionSchema = new Schema({
   text: {
     type: String,
     trim: true,
@@ -10,6 +12,10 @@ const TransactionSchema = new mongoose.Schema({
   amount: {
     type: Number,
     required: [true, 'Please add an amount']
+  },
+  accountID: {
+    type: ObjectId,
+    required: true
   },
   createdAt: {
     type: Date,

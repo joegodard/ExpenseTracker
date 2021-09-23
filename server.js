@@ -13,6 +13,7 @@ connectDB();
 
 // Establish the transactions routes path
 const transactions = require('./routes/transactions');
+const accounts = require('./routes/accounts');
 
 // Set up server
 const app = express();
@@ -25,6 +26,7 @@ if(process.env.NODE_ENV === 'development') {
 
 // Set up path to use on local host
 app.use('/api/v1/transactions', transactions);
+app.use('/api/v1/accounts', accounts);
 
 // Establish port, default to 5000
 const PORT = process.env.PORT || 5000;
